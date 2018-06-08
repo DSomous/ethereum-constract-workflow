@@ -8,7 +8,7 @@ const { interface, bytecode } = require(contractPath);
 
 //Set provider
 const provider = new HDWalletProvider(
-  'infant absorb gossip tornado winner safe surge economy patch vendor wasp turkey',
+  'infant .....',
   'https://rinkeby.infura.io/BumjLQmtWeg67tPpvaZf'
 )
 
