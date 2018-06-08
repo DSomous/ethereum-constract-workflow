@@ -7,7 +7,7 @@
     "compile": "node scripts/compile.js",
     "pretest": "npm run compile",
     "test": "mocha tests/",
-    "predeploy": "npm run compile",
+    "predeploy": "npm run compile & npm run test",
     "deploy": "node scripts/deploy.js"
   },
   "keywords": [],
