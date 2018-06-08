@@ -21,8 +21,10 @@ const web3 = new Web3(provider);
   console.log('The account of contract need to deploy', accounts[0]);
 
   //Creat and deploy Contract instance
+  console.time('contract-deploy');
   const result = await new web3.eth.Contract(JSON.parse(interface))
                   .deploy({ data: bytecode, arguments: ['BMW']})
                   .send({from: accounts[0], gas: '1000000'});
-  console.log('The result of deploy', result);
+  console.timeEnd('contract-deploy');
+  console.log('The result of deploy', result.options.address);
 })();
