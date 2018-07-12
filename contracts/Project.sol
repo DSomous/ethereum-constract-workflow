@@ -33,6 +33,11 @@ library SafeMath {
 contract Project {
     using SafeMath for uint;
 
+    modifier ownerOnly () {
+        require(msg.sender == owner);
+        _;
+    }
+
     struct Payment {
         string description;
         uint amount;
@@ -65,11 +70,11 @@ contract Project {
         uint newBalance = 0;
         newBalance = address(this).balance.add(msg.value);
         require(newBalance <= goal);
-        
+
         investors.push(msg.sender);
     }
 
-    function createPayment(string _description, uint _amount, address _receiver) public {
+    function createPayment(string _description, uint _amount, address _receiver) ownerOnly public {
         Payment memory newPayment = Payment({
             description: _description,
             amount: _amount,
@@ -107,10 +112,11 @@ contract Project {
         payment.voters.push(msg.sender);
     }
 
-    function doPayment(uint index) public {
+    function doPayment(uint index) ownerOnly public {
         Payment storage payment = payments[index];
 
         require(!payment.completed);
+        require(address(this).balance >= payment.amount);
         require(payment.voters.length > (investors.length / 2));
 
         payment.receiver.transfer(payment.amount);
