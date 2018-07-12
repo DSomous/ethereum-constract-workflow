@@ -1,6 +1,38 @@
 pragma solidity ^0.4.17;
 
+/**
+ * @title SafeMath
+ * @dev Math operations with safety checks that throw on error
+ */
+library SafeMath {
+    function mul(uint a, uint b) internal pure returns (uint) {
+        uint c = a * b;
+        assert(a == 0 || c / a == b);
+        return c;
+    }
+
+    function div(uint a, uint b) internal pure returns (uint) {
+        // assert(b > 0); // Solidity automatically throws when dividing by 0
+        uint c = a / b;
+        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+        return c;
+    }
+
+    function sub(uint a, uint b) internal pure returns (uint) {
+        assert(b <= a);
+        return a - b;
+    }
+
+    function add(uint a, uint b) internal pure returns (uint) {
+        uint c = a + b;
+        assert(c >= a);
+        return c;
+    }
+}
+
 contract Project {
+    using SafeMath for uint;
+
     struct Payment {
         string description;
         uint amount;
@@ -28,8 +60,12 @@ contract Project {
     function contribute() public payable {
         require(msg.value >= minInvest);
         require(msg.value <= maxInvest);
-        require(address(this).balance <= goal);
+        // require(address(this).balance + msg.value <= goal);
 
+        uint newBalance = 0;
+        newBalance = address(this).balance.add(msg.value);
+        require(newBalance <= goal);
+        
         investors.push(msg.sender);
     }
 
