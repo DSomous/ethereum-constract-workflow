@@ -26,7 +26,7 @@ describe('Project Contract', () => {
     //1.3 Call the projectList.creatProject function.
     await projectList.methods.createProject('Ethereum DApp Tutorial', 100, 10000, 1000000).send({
       from: accounts[0],
-      gas: '1000000'
+      gas: '5000000'
     });
 
     //1.4 Get Project instant address just created now.
@@ -111,22 +111,22 @@ describe('Project Contract', () => {
     //项目支出请求
     await project.methods.createPayment('Rent Office', '2000', receiver).send({
       from: owner,
-      gsa: '1000000'
+      gas: '1000000'
     })
 
     //投票
     await project.methods.approvePayment(0).send({
       from: investor,
-      gsa: '1000000'
+      gas: '1000000'
     })
 
     //资金划转
     await project.methods.doPayment(0).send({
       from: owner,
-      gsa: '1000000'
+      gas: '1000000'
     })
 
-    const payment = await project.methods.payment(0).call();
+    const payment = await project.methods.payments(0).call();
     assert.equal(payment.completed, true);
     assert.equal(payment.voterCount, 1);
 
