@@ -8,7 +8,10 @@
     "pretest": "npm run compile",
     "test": "mocha tests/",
     "predeploy": "npm run compile & npm run test",
-    "deploy": "node scripts/deploy.js"
+    "deploy": "node scripts/deploy.js",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js "
   },
   "keywords": [],
   "author": "",
